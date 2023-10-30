@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tut_app/app/app.dart';
 
-class TestApp extends StatefulWidget {
-  const TestApp({super.key});
+import 'app/app.dart';
 
-  @override
-  State<TestApp> createState() => _TestAppState();
-}
+class Test extends StatelessWidget {
+  const Test({Key? key}) : super(key: key);
 
-class _TestAppState extends State<TestApp> {
-  _logState() {
-    print(MyApp.appState); // 0
+  void updateAppState() {
+    MyApp.instance.appState = 10;
   }
 
-  _updateAppState() {
-    MyApp.appState = 10;
-    print(MyApp.appState); // 10
+  void getAppState() {
+    print(MyApp.instance.appState); // 10
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container();
   }
 }
