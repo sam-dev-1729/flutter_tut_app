@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../presentation/theme_manager.dart';
 
+const isDevelopMode = true;
+
 class MyApp extends StatefulWidget {
   // const MyApp({super.key});
   int appState = 0;
