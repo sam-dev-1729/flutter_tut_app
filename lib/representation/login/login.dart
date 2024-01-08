@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_tut_app/app/app_prefs.dart';
 import 'package:flutter_tut_app/representation/common/new_state_renderer/state_render_impl.dart';
 import 'package:flutter_tut_app/representation/login/login_viewmodel.dart';
+import 'package:flutter_tut_app/representation/resources/routes_manager.dart';
 import 'package:flutter_tut_app/representation/resources/strings_manager.dart';
 import 'package:flutter_tut_app/representation/resources/values_manager.dart';
 
@@ -20,8 +23,9 @@ class _LoginViewState extends State<LoginView> {
 
   // LoginViewModel _viewModel = LoginViewModel();
   LoginViewModel _viewModel = instance<LoginViewModel>();
-  @override
-  void initState() {
+  AppPreferences _appPreferences = instance<AppPreferences>();
+
+  _bind() {
     _viewModel.start();
     _userNameController.addListener(() {
       _viewModel.setUserName(_userNameController.text);
@@ -29,6 +33,19 @@ class _LoginViewState extends State<LoginView> {
     _passwordController.addListener(() {
       _viewModel.setPassword(_passwordController.text);
     });
+
+    _viewModel.loginSuccessStreamController.stream.listen((isLoginSuccessful) {
+      print(isLoginSuccessful);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _appPreferences.setUserLoggedIn();
+        Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    _bind();
     super.initState();
   }
 

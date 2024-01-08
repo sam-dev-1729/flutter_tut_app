@@ -27,3 +27,4 @@ Future<DeviceInfo> getDeviceInfo() async {
     return DeviceInfo(name, identifier, model);
   }
 }
+

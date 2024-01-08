@@ -7,6 +7,8 @@ import 'package:flutter_tut_app/representation/resources/strings_manager.dart';
 import 'package:flutter_tut_app/representation/resources/styles_manager.dart';
 import 'package:flutter_tut_app/representation/resources/values_manager.dart';
 
+import '../../app/app_prefs.dart';
+import '../../app/di.dart';
 import '../../domain/model/model.dart';
 import '../resources/routes_manager.dart';
 
@@ -20,8 +22,11 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   PageController _pageController = PageController(initialPage: 0);
   OnboardingViewModel _viewModel = OnboardingViewModel();
+  AppPreferences _appPreferences = instance<AppPreferences>();
+
   @override
   void initState() {
+    _appPreferences.setOnboardingViewed();
     _viewModel.start();
     super.initState();
   }

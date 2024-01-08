@@ -18,11 +18,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     DeviceInfo _deviceInfo = await getDeviceInfo();
 
     return await _appServiceClient.login(
-      loginRequest.email,
-      loginRequest.password,
+      "admin",
+      "admin",
       "1",
       "1",
-      /* _deviceInfo.identifier,
+      /*loginRequest.email,
+      loginRequest.password, _deviceInfo.identifier,
       _deviceInfo.version,*/
     );
   }

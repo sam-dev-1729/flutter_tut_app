@@ -6,6 +6,9 @@ import 'package:flutter_tut_app/representation/resources/color_manager.dart';
 import 'package:flutter_tut_app/representation/resources/routes_manager.dart';
 import 'package:flutter_tut_app/representation/resources/values_manager.dart';
 
+import '../../app/app_prefs.dart';
+import '../../app/di.dart';
+
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
@@ -14,12 +17,28 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  AppPreferences _appPreferences = instance<AppPreferences>();
+
   late Timer timer;
   _delay() {
     timer = Timer(Duration(milliseconds: DurationConstant.d2000), _goNext);
   }
 
-  _goNext() => Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+  _goNext() {
+    _appPreferences.isUserLoggedIn().then((isUserLoggedIn) {
+      if (isUserLoggedIn) {
+        Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      } else {
+        _appPreferences.isOnboardingViewed().then((isViewed) {
+          if (isViewed) {
+            Navigator.pushReplacementNamed(context, Routes.loginRoute);
+          } else {
+            Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+          }
+        });
+      }
+    });
+  }
 
   @override
   void initState() {

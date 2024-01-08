@@ -17,6 +17,7 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   StreamController _validateAllStreamController =
       StreamController<void>.broadcast();
+  StreamController loginSuccessStreamController = StreamController<bool>();
   LoginUsecase _loginUsecase;
   LoginViewModel(this._loginUsecase);
 
@@ -72,7 +73,7 @@ class LoginViewModel extends BaseViewModel
     }, (data) {
       // success
       inputState.add(ContentState());
-
+      loginSuccessStreamController.add(true);
       // navigate to home
     });
   }
